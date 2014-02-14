@@ -23,7 +23,16 @@ class Equipos extends CI_Controller {
 		$data['numSerie']=$this->input->post('numSerie');
 		$data['descripcion']=$this->input->post('descripcion');
 		$data['color']=$this->input->post('color');
-		$ban=$this->ModelEquipo->addEquipo($data);
+		$ban=1;
+		foreach ($data as $key => $value) {
+			if(empty($data[$key]))
+				{
+					$ban=0;
+					break;
+				}
+		}
+		if($ban==1)
+			$ban=$this->ModelEquipo->addEquipo($data);
 		$arr=array();
 		$arr['ban']=$ban;
 		if($ban==1)
@@ -31,7 +40,8 @@ class Equipos extends CI_Controller {
 			$query=$this->ModelEquipo->getIdEq($data);
 			if($query->num_rows()>0)
 			{
-				foreach ($query->result() as $row) {
+				foreach ($query->result() as $row)
+				{
 					$id=$row->idEq;
 				}
 				$arr['idEq']=$id;
@@ -45,5 +55,38 @@ class Equipos extends CI_Controller {
 		}
 		else
 			echo json_encode($arr);
+	}
+	function getEquipoAjax()
+	{
+		$id=$this->input->post('comboId');
+		$query=$this->ModelEquipo->getEquipoAjax($id);
+		echo json_encode($query->result());
+	}
+	function getEquipoAjax2()
+	{
+		$id=$this->input->post('idEquipo');
+		$query=$this->ModelEquipo->getEquipoAjax($id);
+		echo json_encode($query->result());
+	}
+	function modiEquipoAjax()
+	{
+		$arr=array();
+		$arr=$this->input->post();
+		$ban=1;
+		foreach ($arr as $key => $value) {
+			if(empty($arr[$key]))
+			{
+				$ban=0;
+				break;
+			}
+		}
+		if($ban==1)
+		{
+			$query=$this->ModelEquipo->modiEquipo($arr);
+			echo $query;
+		}
+		else
+			echo $ban;
+
 	}
 }

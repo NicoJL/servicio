@@ -2,7 +2,7 @@
 <div class="row">
 	<form rule="form" action="addCliente" method="post">
 	<div class="col-md-6 col-md-offset-2 col-sm-8">
-		<div class="panel panel-primary">
+		<div class="paneles panel panel-primary">
  			 <div class="panel-heading"><B>CLIENTES<B></div>
   			<div class="panel-body">	
 			<div class="form-group">

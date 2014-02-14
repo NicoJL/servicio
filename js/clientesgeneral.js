@@ -1,7 +1,11 @@
 $(document).on('ready',function()
 {
+    var idCli;
+    var ren;
     var tablaCli=$('#tabla-clientes');
+    var btnEli=$("tr button.btnEliCli");
     var idCli1=$('#idCli');
+    var modalCli=$('div#modalCli');
     var cargador=$(".cargador");
      divCli=$('#edi-cli');
      nombre=$('#nombre');
@@ -16,11 +20,38 @@ $(document).on('ready',function()
         showAnim:"drop",
         showButtonPanel: true
      });
+
      var colNom=null;
      var colDir=null;
      var colCel=null;
      var id=null;
     divCli.hide();
+    modalCli.dialog({
+        autoOpen:false,
+            modal:false,
+            height:180,
+            width:320,
+            show: {
+        effect: "bounce",
+        duration: 600
+      },
+      hide: {
+        effect: "drop",
+        duration: 400
+      },
+            title:"Confirmación",
+             buttons:{
+                "Aceptar":function()
+                {
+                    eliminarCliente(idCli,ren,modalCli) ;
+            
+                },
+                Cancelar:function()
+                {
+                    modalCli.dialog('close');
+                }
+            }
+        });
     cargador.hide();
     cargador.dialog({
         autoOpen:false,
@@ -90,6 +121,14 @@ $(document).on('ready',function()
     {
      alert($(this).parent().parent().find('td:eq(0)').text());
     })*/
+    btnEli.on('click',function()
+    {
+        document.querySelector('#mnsCli').innerHTML="<B>¿Realmente deseas borrar al cliente?</B>";
+        idCli=$(this).parent().find(':input').val();
+        ren=$(this).parent().parent();
+        
+         modalCli.dialog('open');
+    })
     tr.on("click",function()
     {
 id=$(this).parent().parent().find(':input').val();
@@ -181,3 +220,35 @@ id=$(this).parent().parent().find(':input').val();
         return false;
     })
 })
+
+function eliminarCliente(idEli,ren,modalCli)
+{
+    ruta=$('input#rutaEliCli').val();
+    $.ajax({
+        url:ruta,
+        beforeSend:function()
+        {
+
+        },
+        type:'post',
+        dataType:'text',
+        data:{idCli:idEli},
+        success:function(resp)
+        {
+            
+            switch(resp)
+            {
+                case "1":
+                    ren.remove();
+                    modalCli.dialog('close');
+                    break;
+                case "2":
+                    document.querySelector('#mnsCli').innerHTML="<B>Ese cliente ya fue borrado</B>";
+                    break;
+                default:
+                     document.querySelector('#mnsCli').innerHTML="<B><font color='red'>Ocurrio un error</font></B>";
+                    
+            }
+        }
+    })  
+}

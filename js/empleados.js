@@ -169,6 +169,7 @@ $(document).on('ready',function(){
 	
 
 	btneli.click(function(){
+
 		id=$(this).parent().parent().find(':input').val();
 		trtemp=$(this).parent().parent();
 		confirm.dialog('open');

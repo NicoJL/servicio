@@ -17,14 +17,14 @@
 					foreach($query->result() as $row)
 					{?>
 						<tr>
-							<form action="<?=base_url()?>clientes/eliminarCli" method="POST" >
-								<input type="hidden" name="idCli" value="<?=$row->idCli?>">
+							<form action="" method="POST" >
+								
 								<td><?=$row->nombre?></td>
 								<td><?=$row->direccion?></td>
 								<td><?=$row->celular?></td>
 								<td><button type="button" class="btn btn-info btn-xs btn-edi"><span class="glyphicon glyphicon-pencil"></span>
 								</button></td>
-								<td><button class="btn btn-danger btn-xs"><span class="glyphicon glyphicon-trash "></span></button></td>
+								<td><input type="hidden" name="idCli" value="<?=$row->idCli?>"><button type="button" class="btnEliCli btn btn-danger btn-xs"><span class="glyphicon glyphicon-trash "></span></button></td>
 							</form>
 							<td><form action="<?=base_url()?>clientes/addF" method="post">
 									<input type="hidden" name="idCli" value="<?=$row->idCli?>">
@@ -83,4 +83,10 @@
     <span class="sr-only">100%</span>
   </div>
 </div>
+</div>
+<form rule="form">
+	<input type="hidden" name="rutaEliCli" id="rutaEliCli" value="<?=base_url()?>clientes/eliminarCli">
+</form>
+<div id="modalCli" class="row">
+	<p id="mnsCli"></p>
 </div>

@@ -46,7 +46,7 @@ class Empleados extends CI_Controller {
 					$this->VistaAdd('','No existe esa sucursal');
 					break;
 			}
-			//echo $query;
+			echo $query;
 		}
 
 	}

@@ -101,18 +101,21 @@ class Refacciones extends CI_Controller {
 	public function vender()
 	{
 
-		if(!$this->session->userdata('uri'))
+		/*if(!$this->session->userdata('uri'))
 		{
 			$this->session->set_userdata('uri',$this->input->post('servicio'));
 
-		}
-		if(!$this->session->userdata('idServ'))
+		}*/
+		if($this->session->userdata('idServ'))
+			$this->session->unset_userdata('idServ');
+		$this->session->set_userdata('idServ',$this->input->post('idServ'));
+		/*if(!$this->session->userdata('idServ'))
 			$this->session->set_userdata('idServ',$this->input->post('idServ'));
 		else
 			if($this->input->post('idServ')!="")
 				if($this->session->userdata('idServ')!=$this->input->post('idServ'))
-					redirect('serviciofolio/mostrarSalida/'.$this->session->userdata('uri').'');
-		$data['uri']=$this->session->userdata('uri');
+					redirect('serviciofolio/mostrarSalida/');*/
+		//$data['uri']=$this->session->userdata('uri');
 		$data['idServ']=$this->session->userdata('idServ');
 		$uri_segment=3;
 		$offset=$this->uri->segment($uri_segment);	
@@ -238,16 +241,17 @@ class Refacciones extends CI_Controller {
 	function actualizar()
 	{
 		$data=$this->input->post();
-		$uri=$this->input->post('uri');
+		//$uri=$this->input->post('uri');
 		$this->cart->update($data);
 		redirect('serviciofolio/mostrarSalida/'.$uri.'');
 	}
 	function destruir(){
 		$this->session->unset_userdata('idServ');
-		$uri=$this->input->post('uri');
-		$this->session->unset_userdata('uri');
+		//$uri=$this->input->post('uri');
+		//$this->session->unset_userdata('uri');
 		$this->cart->destroy();
-		redirect('serviciofolio/mostrarSalida/'.$uri.'');
+		//redirect('serviciofolio/mostrarSalida/'.$uri.'');
+		redirect('serviciofolio/mostrarSalida/');
 	}
 	function terminar()
 	{
@@ -257,13 +261,11 @@ class Refacciones extends CI_Controller {
 		
 		}
 		$this->session->unset_userdata('idServ');
-		$uri=$this->input->post('uri');
-		$this->session->unset_userdata('uri');
+		//$uri=$this->input->post('uri');
+		//$this->session->unset_userdata('uri');
 		$this->cart->destroy();
-		redirect('serviciofolio/mostrarSalida/'.$uri.'');
+		//redirect('serviciofolio/mostrarSalida/'.$uri.'');
+		redirect('serviciofolio/mostrarSalida/');
 	}
-	function clave()
-	{
-		echo md5("santi");
-	}
+	
 }

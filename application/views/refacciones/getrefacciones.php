@@ -1,4 +1,20 @@
-
+<div class="row">
+	<div class="col-md-8 md-offset-3">
+		<form role="form" class="form-horizontal" action="<?=base_url()?>refacciones/consultaGeneral" method="post">
+			<div class="form-group">
+    			<label for="idsuc" class="col-md-2 control-label">Sucursal</label>
+    			<div class="col-sm-6">
+      				<select name="idsuc" class="form-control">
+      					<?php foreach($suc->result() as $row){?>
+      					<option value="<?=$row->idsuc?>"><?=$row->nombre?></option>
+      					<?php }?>
+      				</select>
+    			</div>
+    			<div class="col-md-4"><button class="btn btn-primary">Buscar</button></div>
+  			</div>	
+  		</form>		
+	</div>
+</div><br>
 <div class="row">
 	<div class="col-md-12 col-sm-12">
 		<div class="table-responsive">
@@ -41,21 +57,5 @@
 				</tbody>
 			</table>
 	</div>
-	</div>
-</div>
-<div class="row">
-	<div class="col-md-6 md-offset-3">
-		<form role="form" class="form-horizontal" action="<?=base_url()?>refacciones/consultaGeneral" method="post">
-			<div class="form-group">
-    			<label for="idsuc" class="col-sm-3 control-label">Sucursal</label>
-    			<div class="col-sm-9">
-      				<select name="idsuc" class="form-control">
-      					<?php foreach($suc->result() as $row){?>
-      					<option value="<?=$row->idsuc?>"><?=$row->nombre?></option>
-      					<?php }?>
-      				</select>
-      				<button class="btn btn-primary">Buscar</button>
-    			</div>
-  			</div>			
 	</div>
 </div>

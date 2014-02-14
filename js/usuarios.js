@@ -74,6 +74,7 @@ $(document).on('ready',function(){
 			type:met,
 			data:{nombre:nom},
 			success:function(resp){
+				alert(resp)
 				switch(resp){
 					case '1':
 						$("#divcomp").html("<img src='../images/x.png' /><span style='color:red;'>intenta con otro nombre</span>");

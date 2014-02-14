@@ -11,7 +11,6 @@
 					<th>Sucursal</th>
 					<th>Editar</th>
 					<th>Eliminar</th>
-
 				</thead>
 				<tbody>
 					<input type="hidden" id="rutaE" value="<?=base_url()?>empleados/getEmpleadoAjax">
@@ -20,11 +19,10 @@
 					<?php 
 						if($query->num_rows()>0)
 							foreach($query->result() as $row)
-							{?>	
-						
+							{?>
 							<tr>
 								<form id="frmE" name="frmE" action="<?=base_url()?>empleados/eliminarEmpleados" method="post">
-									<input type="hidden" id="idemple" name="idemple" value="<?=$row->idemp?>">
+									<input type="hidden" id="idemple" name="idemple" value="<?=$row->idemp?>">	
 									<td><?=$row->nombre?></td>
 									<td><?=$row->domicilio?></td>
 									<td><?=$row->telefono?></td>
@@ -36,7 +34,6 @@
 									<td><button type="button" class="btn btn-danger btn-xs btn-eli"><span class="glyphicon glyphicon-trash"></span></botton></td>
 								</form>
 							</tr>
-						
 							<?php } ?>
 								
 				</tbody>
@@ -83,6 +80,3 @@
 		<p>Realmente deseas eliminar este registro?</p>
 	</div>
 </div>
-</div>
-</body>
-</html>

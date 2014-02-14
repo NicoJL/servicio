@@ -18,12 +18,12 @@
   <link href="<?=base_url()?>css/dataTables.css" rel="stylesheet/less" type="text/css">
   
 	<script src="<?=base_url()?>js/bootstrap.js"></script>
-  <script src="<?=base_url()?>js/spin.min.js"></script>
-  <script src="<?=base_url()?>js/jquery.dataTables.min.js"></script>
+  <script src="<?=base_url()?>js/spin.js"></script>
+    <script src="<?=base_url()?>js/jquery.dataTables.min.js"></script>
   <script src="<?=base_url()?>js/jquery-ui-1.10.3.custom.min.js"></script>
   <script src="<?=base_url()?>js/less.js" type="text/javascript"></script>
-  <script src="<?=base_url()?>js/select2.js"></script>
-  <script src="<?=base_url()?>js/<?=$ruta?>" type="text/javaScript"></script>
+<script src="<?=base_url()?>js/select2.js"></script>
+   <script src="<?=base_url()?>js/<?=$ruta?>" type="text/javaScript"></script>
   <script src="<?=base_url()?>js/hola.js" type="text/javaScript"></script>
  
 </head>
@@ -34,7 +34,7 @@
     <input type="hidden" name="direN" value="<?=base_url()?>/img/menu.png">
    </form>
    
-        <nav class="navbar navbar-inverse navbar-fixed-top " role="navigation" style="margin-bottom:0px;border-radius:0px; width:100%;">
+        <nav id="barraPrincipal" class="navbar navbar-default navbar-fixed-top " role="navigation" style="margin-bottom:0px;border-radius:0px; width:100%;">
         <!-- Brand and toggle get grouped for better mobile display -->
           <div class="navbar-header">
             <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
@@ -43,24 +43,23 @@
               <span class="icon-bar"></span>
               <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="#">ISCO</a>
+            <a class="navbar-brand" href="#"><font color="white">ISCO</font></a>
           </div>
           <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav">
             </ul>
-            <ul class="nav navbar-nav navbar-right">       
+            <ul class="nav navbar-nav navbar-left">       
               <li class="dropdown">
-                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Configuración <b class="caret"></b></a>
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown"><font color="#f4e8ff">Sucursales</font> <b class="caret"></b></a>
                 <ul class="dropdown-menu">
                   <li><a href="<?=base_url()?>sucursal/addSuc">Agregar Sucursal</a></li>
                   <li><a href="<?=base_url()?>sucursal/mostrar">Mostrar Sucursales</a></li>
-                  <li><a href="#">Something else here</a></li>
-                  <li class="divider"></li>
-                  <li><a href="#">Separated link</a></li>
+                 
                 </ul>
               </li>
             </ul>
 
+            <p class="navbar-text navbar-right"><a href="#" style="color:white" class="navbar-link">Cerrar Sesión</a>
           </div><!-- /.navbar-collapse -->
         </nav>
       <div class="container " id="contenedor-principal">
@@ -91,7 +90,7 @@
               </div>
               <ul class="submenu">
                   <li><a href="<?=base_url()?>serviciofolio/mostrarServicios">Consulta</a></li>
-                  <li><a href="#">Corte</a></li>
+                  <li><a href="<?=base_url()?>serviciofolio/fechasCorte">Corte</a></li>
               </ul>
               <p class="texto">Servicios</p>
             </div>

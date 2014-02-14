@@ -7,6 +7,20 @@ $(document).on('ready',function()
 	var panelEquipo=$("#panelEquipo");
 	var panelFolio=$("#panelFolio");
 	var confirServicio=$("#confirServicio");
+	var confirEquipo=$("#confirEquipo");
+	var combo=$("#comboId");
+	var btnSig=$("#btn_sig");
+	var btnCan=$("button#btn_cancel");
+	btnSig.hide();
+	btnCan.hide();
+	mns=$('div#mns');
+	mns.dialog({
+		autoOpen:false,
+		modal:false,
+		width:300,
+		height:150,
+		title:"Aviso",
+	});
 	var opts = {
   lines: 13, // The number of lines to draw
   length: 5, // The length of each line
@@ -47,6 +61,26 @@ $(document).on('ready',function()
 	panelEquipo.hide();
 	panelServicio.hide();
 	confirServicio.hide();
+	confirEquipo.dialog({
+		autoOpen:false,
+		modal:false,
+		width:330,
+		height:200,
+		title:"Confirmación",
+		buttons:{
+			"Aceptar":function()
+			{
+				panelEquipo.slideUp("slow");
+				panelServicio.slideDown("slow");
+				confirEquipo.dialog("close");
+				limpiarEquipo();
+			},
+			"Cancelar":function()
+			{
+				confirEquipo.dialog("close");
+			}
+		}
+	})
 	confirServicio.dialog({
 		autoOpen:false,
 		modal:true,
@@ -57,8 +91,10 @@ $(document).on('ready',function()
 			{
 				sidEq.val("");
 				idEq.val("");
+				folio.val("");
+				$("#comboId option:first-child").attr('selected',true);
 				panelServicio.slideUp("slow");
-				panelEquipo.slideDown("slow");
+				panelFolio.slideDown("slow");
 				confirServicio.dialog("close");
 			},
 			"Terminar":function()
@@ -84,24 +120,40 @@ $(document).on('ready',function()
 			success:function(resp)
 			{ 
 				if(!jQuery.isEmptyObject(resp))
-					if(resp.ban==1)
-					{
+					switch(resp.ban)
+				{
+					case "1":
 						folio.val(resp.folio);
 						panelFolio.slideUp("slow");
-						panelEquipo.slideDown("slow");
-						
-					}
-					else
-					{
-						alert(resp.ban+" la bandera");
-						//ban=2 sucursal no existe
-						//ban=3 cliente no existe
-						//ban=4 error de mysql
-						//ban=50 no se recibieron los datos
-						//ban=100 no se encontro el folio
-					}
-				else 
-					alert("vacia");
+						panelEquipo.slideDown("slow|");
+						break;
+					case "2":
+						mns.css('opacity','1');
+						mns.dialog("open");
+						document.querySelector('#mnsBan').innerHTML="La Sucursal No existe";
+						break;
+					case "3":
+						mns.css('opacity','1');
+						mns.dialog("open");
+						document.querySelector('#mnsBan').innerHTML="El cliente ya no existe";
+						break;
+					case "50":
+						mns.css('opacity','1');
+						mns.dialog("open");
+						document.querySelector('#mnsBan').innerHTML="Faltan datos por llenar, verifique";
+						break;
+					case "100":
+						mns.css('opacity','1');
+						mns.dialog("open");
+						document.querySelector('#mnsBan').innerHTML="No se creo el folio, intente mas tarde";
+						break;
+					default:
+						mns.css('opacity','1');
+						mns.dialog("open");
+						document.querySelector('#mnsBan').innerHTML="Ocurrio un error";
+						break;
+
+				}
 			},
 			error:function(xhr,estado,error)
 			{
@@ -137,32 +189,47 @@ $(document).on('ready',function()
 			type:"POST",
 			success:function(resp){
 				if(!jQuery.isEmptyObject(resp))
-					if(resp.ban==1)
+					switch(resp.ban)
 					{
-						idEq.val(resp.idEq);
-						alert('este es el id del equipo:'+resp.idEq);
-						sfolio.val(folio.val());//para el servicio
-						sidEq.val(idEq.val());// para el servicio 
-						document.frmEquipo.nomEquipo.value="";
-						document.frmEquipo.marca.value="";
-						document.frmEquipo.modelo.value="";
-						document.frmEquipo.numSerie.value="";
-						document.frmEquipo.descripcion.value="";
-						document.frmEquipo.color.value="";
-						panelEquipo.slideUp("slow");
-						panelServicio.slideDown("slow");
-
+						case 0:
+							mns.css('opacity','1');
+							mns.dialog("open");
+							document.querySelector('#mnsBan').innerHTML="Complete todos los datos";
+							break;
+						case "1":
+							idEq.val(resp.idEq);
+							sfolio.val(folio.val());//para el servicio
+							sidEq.val(idEq.val());// para el servicio 
+							limpiarEquipo();
+							panelEquipo.slideUp("slow");
+							panelServicio.slideDown("slow");
+							break;
+						case '2':
+							mns.css('opacity','1');
+							mns.dialog("open");
+							document.querySelector('#mnsBan').innerHTML="El equipo ya existe";
+							break;
+						case "3":
+							mns.css('opacity','1');
+							mns.dialog("open");
+							document.querySelector('#mnsBan').innerHTML="No existe el cliente";
+							break;
+						case 100:
+							mns.css('opacity','1');
+							mns.dialog("open");
+							document.querySelector('#mnsBan').innerHTML="No se encontro el id";
+							break;
+						default:
+							mns.css('opacity','1');
+							mns.dialog("open");
+							document.querySelector('#mnsBan').innerHTML="Ocurrio un error:"+resp.ban;
 					}
 					else
 					{
-						alert(resp.ban+" la bandera");
-						// ban=2 el equipo ya existe
-						// ban=3 no existe el cliente
-						// ban=4 error de mysql
-						// ban=100 no se encontro el id
+						mns.css('opacity','1');
+						mns.dialog("open");
+						document.querySelector('#mnsBan').innerHTML="No se encontro, error";
 					}
-				else 
-					alert("vacia");
 			},
 			error:function(xhr,error,estado)
 			{
@@ -175,6 +242,32 @@ $(document).on('ready',function()
 		});
 
 	});
+/*******************************Botones siguiente y cancelar Para ekipo************************/
+
+btnSig.on('click',function()
+{
+	panelEquipo.slideUp("slow");
+	panelServicio.slideDown("slow");
+	confirEquipo.dialog("close");
+	limpiarEquipo();
+});
+
+btnCan.on('click',function()
+{
+	idEq.val("");
+	sfolio.val("");//para el servicio
+	sidEq.val("");// para el servicio 
+	document.frmEquipo.nomEquipo.value="";
+	document.frmEquipo.marca.value="";
+	document.frmEquipo.modelo.value="";
+	document.frmEquipo.numSerie.value="";
+	document.frmEquipo.descripcion.value="";
+	document.frmEquipo.color.value="";
+	btnSig.slideUp(200);
+	btnCan.slideUp(200);
+	btnEquipo.slideDown(200)
+	confirEquipo.dialog("close");
+})
 /********************************Servicio*************************************************/
 btnServicio.on('click',function ()
 {
@@ -190,17 +283,40 @@ btnServicio.on('click',function ()
 		type:"post",
 		success:function(resp)
 		{
-			if(resp=="1" || resp=="2")
+			
+			switch(resp)
 			{
-				document.frmServicio.tecnico.value="";
-				document.frmServicio.falla.value="";
-				document.frmServicio.cables.value="";
-				document.frmServicio.discos.value="";
-				document.frmServicio.accesorios.value="";
-				document.frmServicio.golpes.value="";
-				document.frmServicio.calcas.value="";
-				//document.frmServicio.tipo.value="";
-				confirServicio.dialog("open");
+				case "1":
+				case "2":
+					//document.frmServicio.tecnico.value="";
+					document.frmServicio.falla.value="";
+					document.frmServicio.cables.value="";
+					document.frmServicio.discos.value="";
+					document.frmServicio.accesorios.value="";
+					document.frmServicio.golpes.value="";
+					document.frmServicio.calcas.value="";
+					//document.frmServicio.tipo.value="";
+					confirServicio.dialog("open");
+					break;
+				case "3":
+					mns.css('opacity','1');
+					mns.dialog("open");
+					document.querySelector('#mnsBan').innerHTML="Ubo problema, con el equipo";
+					break;
+				case "4":
+					mns.css('opacity','1');
+					mns.dialog("open");
+					document.querySelector('#mnsBan').innerHTML="No existe el cliente";
+					break;
+				case "6":
+					mns.css('opacity','1');
+					mns.dialog("open");
+					document.querySelector('#mnsBan').innerHTML="Complete todos los campos";
+					break;
+				default:
+					mns.css('opacity','1');
+					mns.dialog("open");
+					document.querySelector('#mnsBan').innerHTML="Ocurrio un error, intente mas tarde";
 			}
 		},
 		error:function(xhr,error,estado)
@@ -213,5 +329,64 @@ btnServicio.on('click',function ()
 		}
 
 	})
-})
 });
+
+/**************************************combo *********************************************/
+combo.on("change",function()
+{
+	limpiarEquipo();
+	getEquipo($(this).val());
+})
+function getEquipo(id)
+{
+	$.ajax({
+		url:document.rutas.rutaEquipo.value,
+		beforeSend:function(){
+			spinEquipo = new Spinner(opts).spin(target2);
+		},
+		type:"post",
+		data:{comboId:id},
+		dataType:"json",
+		success:function(resp)
+		{
+			if(!jQuery.isEmptyObject(resp))
+			{
+				idEq.val(resp[0].idEq);
+				sfolio.val(folio.val());//para el servicio
+				sidEq.val(idEq.val());// para el servicio 
+				document.frmEquipo.nomEquipo.value=resp[0].nomEquipo;
+				document.frmEquipo.marca.value=resp[0].marca;
+				document.frmEquipo.modelo.value=resp[0].modelo;
+				document.frmEquipo.numSerie.value=resp[0].numSerie;
+				document.frmEquipo.descripcion.value=resp[0].descripcion;
+				document.frmEquipo.color.value=resp[0].color;
+				//confirEquipo.dialog("open");
+				btnEquipo.hide();
+				btnSig.slideDown(200);
+				btnCan.slideDown(200);
+			}
+			else
+				alert("ya no existe el equipo");
+		},
+		error:function(xhr,error,estado)
+		{
+
+		},
+		complete:function(xhr)
+		{
+			spinEquipo.stop();
+		}
+
+	})
+}
+function limpiarEquipo()
+{
+	document.frmEquipo.nomEquipo.value="";
+	document.frmEquipo.marca.value="";
+	document.frmEquipo.modelo.value="";
+	document.frmEquipo.numSerie.value="";
+	document.frmEquipo.descripcion.value="";
+	document.frmEquipo.color.value="";
+}
+});
+

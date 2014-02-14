@@ -52,7 +52,14 @@ class ModelCli extends CI_Model {
 	}
 	function eliminarCli($id)
 	{
-		$this->db->query('call eliminarCli ('.$id.',@ban);');
+		$query=$this->db->query('call eliminarCli ('.$id.',@ban);');
+		$query->next_result();
+		$res=$this->db->query('select @ban');
+			foreach ($res->result_array() as $row)
+			{
+				$ban=$row['@ban'];
+			}
+		return $ban;
 	}
 	function getIdCli($data)
 	{

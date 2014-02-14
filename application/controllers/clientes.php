@@ -8,6 +8,7 @@ class Clientes extends CI_Controller {
 		$this->load->helper('form');
 		$this->load->library("form_validation");
 		$this->load->model("ModelCli");
+		$this->load->model("ModelEquipo");
 		$this->load->library('pagination');
 	}
 	public function index()
@@ -49,6 +50,8 @@ class Clientes extends CI_Controller {
 						$arr['nombre']=$row->nombre;
 						$arr['ruta']="servicio.js";
 					}
+					$arr['query']=$this->ModelEquipo->getEquipos($arr['idcli']);
+					//$arr['query']=$this->ModelEquipo->getEquipos($id);
 					$this->load->view('templates/header',$arr);
 					$this->load->view('servicios/addservicio');
 				}
@@ -144,15 +147,18 @@ class Clientes extends CI_Controller {
 	function eliminarCli()
 	{
 		$id=$this->input->post('idCli');
-		$this->ModelCli->eliminarCli($id);
-
-		$this->mostrar();
+		$ban=$this->ModelCli->eliminarCli($id);
+		echo $ban;
+		//$this->mostrar();
 	}
 	function addF()
 	{
-		$arr['idcli']=$this->input->post('idCli');
+		$id=$this->input->post('idCli');
+		$arr['title']="Servicios";
+		$arr['idcli']=$id;
 		$arr['nombre']=$this->input->post('nombre');
 		$arr['ruta']="servicio.js";
+		$arr['query']=$this->ModelEquipo->getEquipos($id);
 		$this->load->view('templates/header',$arr);
 		$this->load->view('servicios/addservicio');
 	}
