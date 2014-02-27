@@ -9,10 +9,10 @@ a
 	margin-top: 0px;
 	margin-bottom: 0px;
 }
-body
+html,body
 {
 
-	background: #f9fcf7; /* Old browsers */
+background: #f9fcf7; /* Old browsers */
 background: -moz-linear-gradient(-45deg,  #f9fcf7 0%, #f5f9f0 100%); /* FF3.6+ */
 background: -webkit-gradient(linear, left top, right bottom, color-stop(0%,#f9fcf7), color-stop(100%,#f5f9f0)); /* Chrome,Safari4+ */
 background: -webkit-linear-gradient(-45deg,  #f9fcf7 0%,#f5f9f0 100%); /* Chrome10+,Safari5.1+ */
@@ -21,7 +21,11 @@ background: -ms-linear-gradient(-45deg,  #f9fcf7 0%,#f5f9f0 100%); /* IE10+ */
 background: linear-gradient(135deg,  #f9fcf7 0%,#f5f9f0 100%); /* W3C */
 filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f9fcf7', endColorstr='#f5f9f0',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
 
-	font-family: 'olort';
+font-family: 'olort';
+height:100%;
+margin:0px;
+padding:0px;
+max-width:100%;
 }
 ul,ol 
 {
@@ -52,12 +56,24 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f7fbfc', end
 
 
 }
+#contenedor{
+	width:400px;
+	height:50%;
+	border:3px solid #fff;
+	.redondeado(5px);
+}
 #contenedor-principal
 {
 	margin-left: 0px;
 	margin-top: 50px;
 	
 
+}
+#divLogin{
+	width:100%;
+	height: 100%;
+	background-color: rgba(92,156,204,1);
+	color:#fff;
 }
 @font-face{
 	font-family: "olort";
