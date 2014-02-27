@@ -7,6 +7,9 @@ class Clientes extends CI_Controller {
 		parent::__construct();
 		$this->load->helper('form');
 		$this->load->library("form_validation");
+		$this->form_validation->set_message('required', '%s es un campo requerido');
+		$this->form_validation->set_message('valid_email', 'El %s no es valido');
+		$this->form_validation->set_error_delimiters("<div class='alert alert-danger'>","</div>");
 		$this->load->model("ModelCli");
 		$this->load->model("ModelEquipo");
 		$this->load->library('pagination');
@@ -18,7 +21,7 @@ class Clientes extends CI_Controller {
 	public function addCliente()
 	{
 		$this->form_validation->set_rules('nombre','Nombre','required|trim');
-		$this->form_validation->set_rules('correo','Correo','trim');
+		$this->form_validation->set_rules('correo','Correo','trim|valid_email');
 		$this->form_validation->set_rules('telefono','Telefono','required|trim');
 		$this->form_validation->set_rules('celular','Celular','trim');
 		$this->form_validation->set_rules('fecha','Fecha','required|trim');
@@ -69,7 +72,7 @@ class Clientes extends CI_Controller {
 	}
 	function formAgregar($error,$mns)
 	{
-			$data['tittle']="Clientes";
+			$data['title']="Clientes";
 			$data['ruta']="cli.js";
 			$data['error']=$error;
 			$data['message']=$mns;
@@ -88,7 +91,7 @@ class Clientes extends CI_Controller {
 					$offset=0;
 		$config['base_url']=base_url().'clientes/mostrar';
 		$config['total_rows']=$this->ModelCli->numRows();
-		$config['per_page']=3;
+		$config['per_page']=100;
 		$connfig['num_links']=5;
 		$config['first_link']="Primero";
 		$config['last_link']="Ultimo";
@@ -115,34 +118,38 @@ class Clientes extends CI_Controller {
 	}
 	function modiCliAjax()
 	{
-		$data['nombre']=$this->input->post('nombre');
+		/*$data['nombre']=$this->input->post('nombre');
 		$data['correo']=$this->input->post('correo');
 		$data['telefono']=$this->input->post('telefono');
 		$data['celular']=$this->input->post('celular');
 		$data['fecha']=$this->input->post('fecha');
 		$data['direccion']=$this->input->post('direccion');
 		$data['estado']=$this->input->post('estado');
-		$data['idCli']=$this->input->post('idCli');
-		$ban=false;
-		/*foreach ($data as $key => $value) 
+		$data['idCli']=$this->input->post('idCli');*/
+		$data=array();
+		$data=$this->input->post();
+		$ban=1;
+		foreach ($data as $key => $value) 
 		{
-				if(!empty($value))
-					$ban=true;
-				else
+				if(empty($data[$key]))
 				{
-					$ban=false;
+					$ban=0;
 					break;
 				}
 		}
-		if($ban)*/
-	//	{
+		if(!filter_var($data['correo'],FILTER_VALIDATE_EMAIL))
+		{
+			$ban=4;
+		}
+		if($ban==1)
+		{
 			$query=$this->ModelCli->modiCli($data);
 			echo $query;
-	//	}
-	//	else
-	//	{
-	//		echo 'error';
-	//	}
+		}
+		else
+		{
+			echo $ban;
+		}
 	}
 	function eliminarCli()
 	{
@@ -162,5 +169,5 @@ class Clientes extends CI_Controller {
 		$this->load->view('templates/header',$arr);
 		$this->load->view('servicios/addservicio');
 	}
-
+	
 }

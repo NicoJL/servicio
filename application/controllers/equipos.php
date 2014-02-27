@@ -6,7 +6,7 @@ class Equipos extends CI_Controller {
 	{
 		parent::__construct();
 		$this->load->helper('form');
-		$this->load->library("form_validation");
+		//$this->load->library("form_validation");
 		$this->load->model("ModelEquipo");
 		$this->load->library('pagination');
 	}

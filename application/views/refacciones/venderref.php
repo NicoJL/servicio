@@ -26,6 +26,7 @@
 						<td><?=$row->descripcion?></td>
 						<td><input type="number" class="form-control" name="existencia" id="existencia" value="<?=$row->cant?>" disabled></td>
 						<td>
+							
 							<input type="hidden" name="idServ" value="<?=$idServ?>">
 							<input type="hidden" name="idref" value="<?=$row->idref?>">
 							<input type="number" class="form-control" min="0" max="<?=$row->cant?>" name="cant" id="cant">

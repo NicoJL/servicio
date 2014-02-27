@@ -122,4 +122,10 @@ class ModelServicio extends CI_Model {
 			}
 		return $num;
 	}
+	function ticket($folio)
+	{
+		$query=$this->db->query('call ticket('.$folio.');');
+		$query->next_result();
+		return $query;
+	}
 }

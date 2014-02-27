@@ -1,3 +1,4 @@
-$(document).on('ready',function(){
+$(document).on('ready',function()
+{
 
 });

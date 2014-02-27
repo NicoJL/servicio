@@ -1,5 +1,25 @@
 $(document).on('ready',function()
 {
+	$(function($){
+    $.datepicker.regional['es'] = {
+        closeText: 'Cerrar',
+        prevText: '<Ant',
+        nextText: 'Sig>',
+        currentText: 'Hoy',
+        monthNames: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
+        monthNamesShort: ['Ene','Feb','Mar','Abr', 'May','Jun','Jul','Ago','Sep', 'Oct','Nov','Dic'],
+        dayNames: ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'],
+        dayNamesShort: ['Dom','Lun','Mar','Mié','Juv','Vie','Sáb'],
+        dayNamesMin: ['Do','Lu','Ma','Mi','Ju','Vi','Sá'],
+        weekHeader: 'Sm',
+        dateFormat: 'yy-mm-dd',
+        firstDay: 1,
+        isRTL: false,
+        showMonthAfterYear: false,
+        yearSuffix: ''
+    };
+    $.datepicker.setDefaults($.datepicker.regional['es']);
+});
 	var spinner=null;
 	var spinEquipo=null;
 	var spinServicio=null;
@@ -39,6 +59,10 @@ $(document).on('ready',function()
   top: 'auto', // Top position relative to parent in px
   left: 'auto' // Left position relative to parent in px
 	};
+	$('#fecha').datepicker({
+      showAnim:"drop",
+      showButtonPanel: true
+     });
 	var target = document.getElementById('spFolio');
 	var target2 = document.getElementById('spEquipo');
 	var target3 = document.getElementById('spServicio');
@@ -89,6 +113,8 @@ $(document).on('ready',function()
 		buttons:{
 			"Otro":function()
 			{
+
+				window.open(document.rutas.rutaPDF.value+'/'+folio.val(),'_blank');
 				sidEq.val("");
 				idEq.val("");
 				folio.val("");
@@ -99,6 +125,7 @@ $(document).on('ready',function()
 			},
 			"Terminar":function()
 			{
+				window.open(document.rutas.rutaPDF.value+'/'+folio.val(),'_blank');
 				confirServicio.dialog("close");
 			}
 		}
@@ -286,6 +313,11 @@ btnServicio.on('click',function ()
 			
 			switch(resp)
 			{
+				case "0":
+					mns.css('opacity','1');
+					mns.dialog("open");
+					document.querySelector('#mnsBan').innerHTML="Complete todos los datos";
+					break;
 				case "1":
 				case "2":
 					//document.frmServicio.tecnico.value="";

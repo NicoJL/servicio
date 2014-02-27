@@ -1,9 +1,10 @@
 <div id="panelFolio"class="row">
-<div class="panel panel-primary">
+<div class="paneles panel panel-primary">
   <div class="panel-heading">Folio</div>
   <div class="panel-body">
   	<form name="rutas" id="rutas">
   		<input type="hidden" name="rutaEquipo" id="rutaEquipo" value="<?=base_url()?>equipos/getEquipoAjax">
+  		<input type="hidden" name="rutaPDF" id="rutaPDF" value="<?=base_url()?>serviciofolio/folioPDF">
   	</form>
 	<form class="form-horizontal" name="frmFolio" id="frmFolio" role="form" method="post" action="<?=base_url()?>serviciofolio/addFolio">
 <div class="row">
@@ -11,7 +12,7 @@
 	 	<div class="form-group">
 			<label for="fecha" class="col-md-3 control-label">Fecha</label>
 			<div class="col-md-9">
-				<input type="date" class="form-control" name="fecha" id="fecha" >
+				<input type="text" class="form-control" name="fecha" id="fecha" value=<?php echo date("Y-m-d")?> >
 			</div>
 		</div>
 	</div>
@@ -21,7 +22,7 @@
 			<div class="col-md-9">
 				<select name="estado" id="estado" class="form-control">
 					<option value="pendiente">Pendiente</option>
-					<option value="prioridad">Prioritario</option>
+					<option value="prioridad">Inmediato</option>
 					<option value="entregado">Entregado</option>
 				</select>
 			</div>
@@ -61,7 +62,7 @@
 </div>
 </div>
 <div id="panelEquipo" class="row">
-	<div class="panel panel-primary">
+	<div class="paneles panel panel-primary">
   		<div class="panel-heading">Equipo del Cliente</div>
  			<div class="panel-body">
 				<form class="form-horizontal" id="frmEquipo" name="frmEquipo" role="form" action="<?=base_url()?>equipos/addEquipo" method="post">
@@ -153,7 +154,7 @@
 		</div><!--Panel Titulo-->
 </div><!--row PRINCIPAL DEL FORMULARIO EQUIPO-->
 <div id="panelServicio" class="row">
-	<div class="panel panel-primary">
+	<div class="paneles panel panel-primary">
   		<div class="panel-heading">Servicio</div>
  			<div class="panel-body">
 				<form class="form-horizontal" id="frmServicio" name="frmServicio" role="form" action="<?=base_url()?>servicioFolio/addServicio" method="post">

@@ -46,16 +46,23 @@
 								</form>
 							</td>
 							<td>
-								<form role="form" action="<?=base_url()?>refacciones/getRefaccion" method="post">
-								<input type="hidden" name="idsuc" value="<?=$row->idsuc?>">
+								<form role="form" action="" method="post">
 								<input type="hidden" name="idref" value="<?=$row->idref?>">
-								<button class="btn btn-danger btn-xs"><span class="glyphicon glyphicon-trash "></span></button>
+								<input type="hidden" name="idsuc" value="<?=$row->idsuc?>">
+								<button type="button" class="btnEliRef btn btn-danger btn-xs"><span class="glyphicon glyphicon-trash "></span></button>
 								</form>
 							</td>
 						</tr>
 					<?php }?>
 				</tbody>
 			</table>
+			<center><?=$paginacion?></center>
 	</div>
 	</div>
 </div>
+<div id="confirRef" style="opacity:0" class="row">
+	<p id="mnsRef"></p>
+</div>
+<form rule="form">
+	<input type="hidden" name="rutaEliRef" id="rutaEliRef" value="<?=base_url()?>refacciones/eliminarRef">
+</form>

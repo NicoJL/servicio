@@ -1,5 +1,25 @@
 $(document).on('ready',function()
 {
+  $(function($){
+    $.datepicker.regional['es'] = {
+        closeText: 'Cerrar',
+        prevText: '<Ant',
+        nextText: 'Sig>',
+        currentText: 'Hoy',
+        monthNames: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
+        monthNamesShort: ['Ene','Feb','Mar','Abr', 'May','Jun','Jul','Ago','Sep', 'Oct','Nov','Dic'],
+        dayNames: ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'],
+        dayNamesShort: ['Dom','Lun','Mar','Mié','Juv','Vie','Sáb'],
+        dayNamesMin: ['Do','Lu','Ma','Mi','Ju','Vi','Sá'],
+        weekHeader: 'Sm',
+        dateFormat: 'yy-mm-dd',
+        firstDay: 1,
+        isRTL: false,
+        showMonthAfterYear: false,
+        yearSuffix: ''
+    };
+    $.datepicker.setDefaults($.datepicker.regional['es']);
+});
     var idCli;
     var ren;
     var tablaCli=$('#tabla-clientes');
@@ -7,18 +27,18 @@ $(document).on('ready',function()
     var idCli1=$('#idCli');
     var modalCli=$('div#modalCli');
     var cargador=$(".cargador");
-     divCli=$('#edi-cli');
-     nombre=$('#nombre');
-     correo=$('#correo');
-     telefono=$('#telefono');
-     celular=$('#celular');
-     direccion=$('#direccion');
-     fecha=$('#fecha');
-     estado=$('#estado');
-     frmCli=$('#frm-cli')
-     fecha.datepicker({
-        showAnim:"drop",
-        showButtonPanel: true
+    divCli=$('#edi-cli');
+    nombre=$('#nombre');
+    correo=$('#correo');
+    telefono=$('#telefono');
+    celular=$('#celular');
+    direccion=$('#direccion');
+    fecha=$('#fecha');
+    estado=$('#estado');
+    frmCli=$('#frm-cli')
+    fecha.datepicker({
+      showAnim:"drop",
+      showButtonPanel: true
      });
 
      var colNom=null;
@@ -71,8 +91,8 @@ $(document).on('ready',function()
       divCli.dialog({
         autoOpen:false,
             modal:true,
-            height:470,
-            width:500,
+            height:370,
+            width:800,
             show: {
         effect: "fold",
         duration: 800
@@ -96,7 +116,7 @@ $(document).on('ready',function()
     });
    // tr=$(' tr td:nth-child(5) button');
     tr=$('tr .btn-edi');
-    ruta=$('#ruta');
+    rutaGet=$('#ruta');
 	
    
    
@@ -124,34 +144,34 @@ $(document).on('ready',function()
     btnEli.on('click',function()
     {
         document.querySelector('#mnsCli').innerHTML="<B>¿Realmente deseas borrar al cliente?</B>";
-        idCli=$(this).parent().find(':input').val();
+        idCli=$(this).parent().parent().find(':input').val();
         ren=$(this).parent().parent();
-        
+
          modalCli.dialog('open');
     })
     tr.on("click",function()
     {
-id=$(this).parent().parent().find(':input').val();
-       divCli.dialog("open");
-       
-       colCel=$(this).parent().parent().find('td:eq(2)');
-    colDim=$(this).parent().parent().find('td:eq(1)');
-        colNom=$(this).parent().parent().find('td:eq(0)');
-         nombre.val("");
-               correo.val("");
-               telefono.val("");
-               estado.val("");
-               celular.val("");
-               fecha.val("");
-               direccion.val("");
-               getCliente(id);
+      id=$(this).parent().find(':input').val();
+      divCli.dialog("open");
+      colCel=$(this).parent().parent().find('td:eq(2)');
+      colDim=$(this).parent().parent().find('td:eq(1)');
+      colNom=$(this).parent().parent().find('td:eq(0)');
+      nombre.val("");
+      correo.val("");
+      telefono.val("");
+      estado.val("");
+      celular.val("");
+      fecha.val("");
+      direccion.val("");
+      document.querySelector('#mnsModi').innerHTML="";
+      getCliente(id);
             // frmCli.find(':input').val("");
     });
 
     function getCliente(id)
     {
         $.ajax({
-            url:ruta.val(),
+            url:rutaGet.val(),
             beforeSend:function()
             {
                 
@@ -196,11 +216,25 @@ id=$(this).parent().parent().find(':input').val();
             type:"POST",
             success:function(resp)
             {
-                if(resp==1)/*comparar con otros valores para validar, valores k devuelve procedure*/
+                switch(resp)/*comparar con otros valores para validar, valores k devuelve procedure*/
                 {
+                  case "0":
+                    document.querySelector('#mnsModi').innerHTML="<b>Faltan Datos</b>";
+                    break;
+                  case "1":
                     colDim.text(direccion.val());
                     colNom.text(nombre.val());
                     colCel.text(celular.val());
+                    divCli.dialog("close");
+                    break;
+                  case "2":
+                    document.querySelector('#mnsModi').innerHTML="<b>Ya existe ese cliente</b>";
+                    break;
+                  case "4":
+                    document.querySelector('#mnsModi').innerHTML="<b>Ese correo no es valido</b>";
+                    break;
+                  default:
+                    document.querySelector('#mnsModi').innerHTML="<b>Ocurrio un error, inesperado</b>";
                 }
                
             },
@@ -211,7 +245,7 @@ id=$(this).parent().parent().find(':input').val();
             complete:function()
             {
                 cargador.dialog("close");
-                divCli.dialog("close");
+                
             }
         })
     }

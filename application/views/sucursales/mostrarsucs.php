@@ -1,5 +1,5 @@
 <div class="row">
-	<div class="col-md-8 col-md-offset-2">
+	<div class="col-md-12">
 		<div class="table-responsive">
 			<table id="tablasuc" class="table table-bordered">
 				<thead>
@@ -17,10 +17,11 @@
 					
 					<tr>
 						<form class="frm" method="post" action="<?=base_url()?>sucursal/eliminar_suc" >
+							<input type="hidden" class="idsuc"  name="idsuc" value="<?=$row->idsuc?>">
 							<td><?=$row->nombre?></td>
-							<td><?=$row->domicilio?><input type="hidden" class="idsuc"  name="idsuc" value="<?=$row->idsuc?>"></td>
+							<td><?=$row->domicilio?></td>
 							<td><button type="button" name="editar" value="<?=$row->idsuc?>" class="btn btn-info btn-xs btn-edi"  ><span class="glyphicon glyphicon-pencil"></span></button></td>
-							<td><button class="btn btn-danger btn-xs" ><span class="glyphicon glyphicon-trash "></span></button></td>
+							<td><button type="button" class="btnEliSuc btn btn-danger btn-xs" ><span class="glyphicon glyphicon-trash "></span></button></td>
 						</form>
 					</tr>
 					<?php }?>
@@ -66,3 +67,24 @@
   </div>
 </div>
 </div>
+<form name="rutasSuc" id="rutasSuc">
+	<input type="hidden" name="rutaEliSuc" id="rutaEliSuc" value="<?=base_url()?>sucursal/eliminar_suc">
+	<input type="hidden" name="rutaModiSuc" id="rutaModiSuc" value="<?=base_url()?>sucursal/modiSuc">
+</form>
+<div id="modalSuc" class="modal fade">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title">Confirmacion</h4>
+      </div>
+      <div class="modal-body">
+        <p id="mnsSuc" style="color:red;font-size:14px;">Al eliminar una sucursal, solo se desactivara.</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+        <button type="button" id="btnDesactivar" class="btn btn-primary">Desactivar</button>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->

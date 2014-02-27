@@ -73,4 +73,15 @@ class ModelRef extends CI_Model {
 		}
 		return $ban;
 	}
+	function eliRefaccion($id,$idsuc)
+	{
+		$query=$this->db->query('call eliRefaccion('.$id.','.$idsuc.',@ban);');
+		$query->next_result();
+		$res=$this->db->query('select @ban');
+		foreach($res->result_array() as $row)
+		{
+			$ban=$row['@ban'];
+		}
+		return $ban;
+	}
 }

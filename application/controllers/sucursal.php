@@ -7,6 +7,8 @@ class Sucursal extends CI_Controller {
 		parent::__construct();
 		$this->load->helper('form');
 		$this->load->library("form_validation");
+		$this->form_validation->set_message('required', '%s es un campo requerido');
+		$this->form_validation->set_error_delimiters("<div class='alert alert-danger'>","</div>");
 		$this->load->model("ModelSuc");
 	}
 	public function index()
@@ -72,12 +74,10 @@ class Sucursal extends CI_Controller {
 	function mostrar()
 	{
 		$data['query']=$this->ModelSuc->mostrarsuc();
-		if($data['query']->num_rows()>0)
-		{
-			$data['ruta']="validarsuc.js";
-			$this->load->view('templates/header',$data);
-			$this->load->view('sucursales/mostrarsucs');
-		}
+		$data['ruta']="validarsuc.js";
+		$data['title']="Sucursales";
+		$this->load->view('templates/header',$data);
+		$this->load->view('sucursales/mostrarsucs');
 	}
 	function ajaxSucursal()
 	{
@@ -119,6 +119,6 @@ class Sucursal extends CI_Controller {
 	{
 		$id=$this->input->post('idsuc');
 		$this->ModelSuc->eliminarsuc($id);
-		$this->mostrar();
+		echo '1';
 	}
 }

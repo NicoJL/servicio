@@ -10,6 +10,10 @@ class Refacciones extends CI_Controller {
 		$this->load->model("ModelRef");
 		$this->load->library('pagination');
 		$this->load->library('cart');
+		$this->form_validation->set_message('xss_clean', '%s es invalido');
+		$this->form_validation->set_message('required', '%s es un campo requerido');
+		$this->form_validation->set_error_delimiters("<div class='alert alert-danger'>","</div>");
+		
 	}
 	public function index()
 	{
@@ -17,7 +21,7 @@ class Refacciones extends CI_Controller {
 	}
 	public function addRef()
 	{
-		$this->form_validation->set_rules('nombreAcc','Nombre','required|trim');
+		$this->form_validation->set_rules('nombreAcc','Nombre','required|trim|xss_clean');
 		$this->form_validation->set_rules('marca','Marca','required|trim');
 		$this->form_validation->set_rules('precio','Precio','required|trim');
 		$this->form_validation->set_rules('descripcion','Descripcion','trim');
@@ -46,7 +50,8 @@ class Refacciones extends CI_Controller {
 	}
 	public function frmAddRef($success,$error)
 	{
-		$data['tittle']="Refacciones";
+		$data['title']="Refacciones";
+		$data['ruta']="default.js";
 		$data['error']=$error;
 		$data['message']=$success;
 		$this->load->view('templates/header',$data);
@@ -72,7 +77,7 @@ class Refacciones extends CI_Controller {
 			$offset=0;
 		$config['base_url']=base_url().'refacciones/mostrar';
 		$config['total_rows']=$this->ModelRef->numRows($this->session->userdata('idsuc2'));
-		$config['per_page']=3;
+		$config['per_page']=100;
 		$connfig['num_links']=5;
 		$config['first_link']="Primero";
 		$config['last_link']="Ultimo";
@@ -92,12 +97,17 @@ class Refacciones extends CI_Controller {
 		$data['suc']=$this->ModelRef->getSuc(); // chekar abajo
 		$data['title']="Refacciones";
 		$data['cont']=$this->uri->segment($uri_segment);
-
 		$data['ruta']="refacciones.js";
 		$this->load->view('templates/header',$data);
 		$this->load->view('refacciones/getrefacciones');	
 	}
-
+	public function cargarServicio()
+	{
+		if($this->session->userdata('idServ'))
+			$this->session->unset_userdata('idServ',$this->input->post('idServ'));
+		$this->session->set_userdata('idServ',$this->input->post('idServ'));
+		$this->vender();
+	}
 	public function vender()
 	{
 
@@ -106,9 +116,7 @@ class Refacciones extends CI_Controller {
 			$this->session->set_userdata('uri',$this->input->post('servicio'));
 
 		}*/
-		if($this->session->userdata('idServ'))
-			$this->session->unset_userdata('idServ');
-		$this->session->set_userdata('idServ',$this->input->post('idServ'));
+		
 		/*if(!$this->session->userdata('idServ'))
 			$this->session->set_userdata('idServ',$this->input->post('idServ'));
 		else
@@ -123,7 +131,7 @@ class Refacciones extends CI_Controller {
 			$offset=0;
 		$config['base_url']=base_url().'refacciones/vender';
 		$config['total_rows']=$this->ModelRef->numRows(2); //agregar sucursal por defecto solamente
-		$config['per_page']=3;
+		$config['per_page']=100;
 		$connfig['num_links']=5;
 		$config['first_link']="Primero";
 		$config['last_link']="Ultimo";
@@ -154,6 +162,7 @@ class Refacciones extends CI_Controller {
 			if($data['query']->num_rows()>0)
 			{
 				$data['title']="Refaccion";
+				$data['ruta']="default.js";
 				$this->load->view('templates/header',$data);
 				$this->load->view('refacciones/modiref');
 			}
@@ -219,6 +228,7 @@ class Refacciones extends CI_Controller {
 		$data['message']=$success;
 		$data['error']=$error;
 		$data['query']=$this->ModelRef->getRef($id,$suc);
+		$data['ruta']="default.js";
 		$data['title']="Refaccion";
 		$this->load->view('templates/header',$data);
 		$this->load->view('refacciones/modiref');
@@ -266,6 +276,13 @@ class Refacciones extends CI_Controller {
 		$this->cart->destroy();
 		//redirect('serviciofolio/mostrarSalida/'.$uri.'');
 		redirect('serviciofolio/mostrarSalida/');
+	}
+	function eliminarRef()
+	{
+		$id=$this->input->post('idref');
+		$idsuc=$this->input->post('idsuc');
+		$ban=$this->ModelRef->eliRefaccion($id,$idsuc);
+		echo $ban;
 	}
 	
 }

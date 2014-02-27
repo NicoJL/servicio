@@ -10,7 +10,7 @@ class Modelusuarios extends CI_Model {
 	function AddUsusario($data)
 	{
 		$contraseña=$this->encrypt->sha1($data['txtpass']);
-		$query=$this->db->query('call addUsuario("'.$data['txtnombre'].'","'.$data['txtap'].'","'.$data['txtam'].'","'.$data['txtname'].'","'.$data['txtemail'].'","'.$contraseña.'",20,@ban);');
+		$query=$this->db->query('call addUsuario("'.$data['txtnombre'].'","'.$data['txtap'].'","'.$data['txtam'].'","'.$data['txtname'].'","'.$data['txtemail'].'","'.$contraseña.'",2,@ban);');
 		$query->next_result();
 		$res=$this->db->query('select @ban');
 		foreach($res->result_array() as $row)

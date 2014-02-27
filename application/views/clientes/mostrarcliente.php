@@ -17,65 +17,101 @@
 					foreach($query->result() as $row)
 					{?>
 						<tr>
-							<form action="" method="POST" >
 								
-								<td><?=$row->nombre?></td>
-								<td><?=$row->direccion?></td>
-								<td><?=$row->celular?></td>
-								<td><button type="button" class="btn btn-info btn-xs btn-edi"><span class="glyphicon glyphicon-pencil"></span>
-								</button></td>
-								<td><input type="hidden" name="idCli" value="<?=$row->idCli?>"><button type="button" class="btnEliCli btn btn-danger btn-xs"><span class="glyphicon glyphicon-trash "></span></button></td>
-							</form>
+							<td><?=$row->nombre?></td>
+							<td><?=$row->direccion?></td>
+							<td><?=$row->celular?></td>
+							<td><input type="hidden" name="idCli" value="<?=$row->idCli?>"><button type="button" class="btn btn-info btn-xs btn-edi"><span class="glyphicon glyphicon-pencil"></span>
+							</button></td>
+							<td><button type="button" class="btnEliCli btn btn-danger btn-xs"><span class="glyphicon glyphicon-trash "></span></button></td>
 							<td><form action="<?=base_url()?>clientes/addF" method="post">
 									<input type="hidden" name="idCli" value="<?=$row->idCli?>">
 									<input type="hidden" name="nombre" value="<?=$row->nombre?>">
 									<button class="btn btn-primary btn-xs"><span class="glyphicon glyphicon-wrench"></span></button>
-							 </form></td>
+							 	</form>
+							 </td>
 						</tr>
 					<?php } ?>
 				</tbody>
 			</table>
 		</div>
 		<center><?=$paginacion?></center>
-	</div>
+	</div> 
 </div>
 <div id="edi-cli" class="row">	
-	<div class="col-md-12">
-		<form id="frm-cli" rule="form" action="<?=base_url()?>clientes/modiCliAjax" method="post">		
-			<div class="form-group input-group-sm">
-				<label for="nombre">Nombre</label>
-				<input  type="hidden" name="idCli" id="idCli" />
-				<input class="form-control" type="text" name="nombre" id="nombre"/>
-				<input type="hidden" name="ruta" id="ruta" value="<?=base_url()?>clientes/rellenarAjaxCli"/>
-			</div>
-			<div class="form-group input-group-sm">
-				<label for="correo">Correo</label>
-				<input class="form-control" type="text" name="correo" id="correo"/>
-			</div>
-			<div class="form-group input-group-sm">
-				<label for="telefono">Telefono</label>
-				<input class="form-control" type="text" name="telefono" id="telefono"/>
-			</div>
-			<div class="form-group input-group-sm">
-				<label for="celular">Nom. Celular</label>
-				<input class="form-control" type="text" name="celular" id="celular"/>
-			</div>
-			<div class="form-group input-group-sm">
-				<label for="direccion">Dirección</label>
-				<input class="form-control" type="text" name="direccion" id="direccion"/>
-
-			</div>
-			<div class="form-group input-group-sm">
-				<label for="fecha">Fecha</label>
-				<input class="form-control" type="text" name="fecha" id="fecha"/>
-			</div>
-			<div class="form-group input-group-sm">
-				<label for="">Estado</label>
-				<input class="form-control" type="text" name="estado" id="estado"/>
-			</div>
-			
-		</form>
-	</div>
+	<form class="form-horizontal" id="frm-cli" rule="form" action="<?=base_url()?>clientes/modiCliAjax" method="post">
+  			<div class="panel-body">	
+  				<div class="row">
+                    <div class="col-md-6">
+						<div class="form-group">
+							<label for="nombre" class="control-label col-md-3">Nombre</label>
+							<div class="col-md-9">
+								<input class="form-control" type="text" name="nombre" id="nombre" placeholder=""/>
+								<input  type="hidden" name="idCli" id="idCli" />
+				
+								<input type="hidden" name="ruta" id="ruta" value="<?=base_url()?>clientes/rellenarAjaxCli"/>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-6">
+						<div class="form-group">
+							<label for="correo" class="control-label col-md-3">Correo</label>
+							<div class="col-md-9">
+								<input class="form-control" type="text" name="correo" id="correo"/>
+							</div>
+						</div>
+					</div>
+				</div> <!--row-->
+				<div class="row">
+					<div class="col-md-6">
+						<div class="form-group">
+							<label for="telefono" class="control-label col-md-3">Telefono</label>
+							<div class="col-md-9">
+								<input class="form-control" type="text" name="telefono" id="telefono"/>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-6">
+						<div class="form-group">
+							<label for="celular"  class="control-label col-md-3">Celular</label>
+							<div class="col-md-9">
+								<input class="form-control" type="text" name="celular" id="celular"/>
+							</div>
+						</div>
+					</div>
+				</div><!--row-->
+				<div class="row">
+					<div class="col-md-6">
+						<div class="form-group">
+							<label for="direccion" class="control-label col-md-3">Dirección</label>
+							<div class="col-md-9">
+								<input class="form-control" type="text" name="direccion" id="direccion"/>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-6">
+						<div class="form-group">
+							<label for="fecha" class="control-label col-md-3">Fecha</label>
+							<div class="col-md-9">
+								<input class="form-control" type="text" name="fecha" id="fecha"/>
+							</div>
+						</div>
+					</div>
+				</div><!--row-->
+				<div class="row">
+					<div class="col-md-6">
+						<div class="form-group">
+							<label for="estado" class="control-label col-md-3">Estado</label>
+							<div class="col-md-9">
+								<input class="form-control" type="text" name="estado" id="estado"/>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-6">
+						<p style="color:red;text-align:center" id="mnsModi"></p>
+					</div>
+			</form>
+	
 </div>
 <div class="col-md-12 cargador">
 <div class=" progress  progress-striped active">
@@ -86,6 +122,7 @@
 </div>
 <form rule="form">
 	<input type="hidden" name="rutaEliCli" id="rutaEliCli" value="<?=base_url()?>clientes/eliminarCli">
+	
 </form>
 <div id="modalCli" class="row">
 	<p id="mnsCli"></p>

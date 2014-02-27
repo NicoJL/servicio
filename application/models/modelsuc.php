@@ -43,6 +43,7 @@ class ModelSuc extends CI_Model {
 	}
 	function eliminarsuc($id)
 	{
-		$this->db->query('call `servicio`.`eliminarsuc`('.$id.');');
+		$query=$this->db->query('call `servicio`.`eliminarsuc`('.$id.');');
+		$query->next_result();
 	}
 }

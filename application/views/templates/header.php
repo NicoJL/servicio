@@ -34,7 +34,7 @@
     <input type="hidden" name="direN" value="<?=base_url()?>/img/menu.png">
    </form>
    
-        <nav id="barraPrincipal" class="navbar navbar-default navbar-fixed-top " role="navigation" style="margin-bottom:0px;border-radius:0px; width:100%;">
+        <nav  class="navbar navbar-inverse navbar-fixed-top " role="navigation" style="margin-bottom:0px;border-radius:0px; width:100%;">
         <!-- Brand and toggle get grouped for better mobile display -->
           <div class="navbar-header">
             <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
@@ -50,7 +50,27 @@
             </ul>
             <ul class="nav navbar-nav navbar-left">       
               <li class="dropdown">
-                <a href="#" class="dropdown-toggle" data-toggle="dropdown"><font color="#f4e8ff">Sucursales</font> <b class="caret"></b></a>
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Sucursales <b class="caret"></b></a>
+                <ul class="dropdown-menu">
+                  <li><a href="<?=base_url()?>sucursal/addSuc">Agregar Sucursal</a></li>
+                  <li><a href="<?=base_url()?>sucursal/mostrar">Mostrar Sucursales</a></li>
+                 
+                </ul>
+              </li>
+            </ul>
+            <ul class="nav navbar-nav navbar-left">       
+              <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Empleados <b class="caret"></b></a>
+                <ul class="dropdown-menu">
+                  <li><a href="<?=base_url()?>empleados/AddEmpleado">Agregar</a></li>
+                  <li><a href="<?=base_url()?>empleados/MostrarE">Consulta</a></li>
+                 
+                </ul>
+              </li>
+            </ul>
+            <ul class="nav navbar-nav navbar-left">       
+              <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Usuarios <b class="caret"></b></a>
                 <ul class="dropdown-menu">
                   <li><a href="<?=base_url()?>sucursal/addSuc">Agregar Sucursal</a></li>
                   <li><a href="<?=base_url()?>sucursal/mostrar">Mostrar Sucursales</a></li>
@@ -64,8 +84,32 @@
         </nav>
       <div class="container " id="contenedor-principal">
         <div class="row">
-          <div class="col-md-2 col-xs-6" id="menu">
-            <section id="logo">
+          <div class="col-md-2 col-xs-6 " style="top:28px;">
+            <div class="list-group paneles">
+              <a href="#" class="list-group-item active">
+                Clientes
+              </a>
+             <a href="<?=base_url()?>clientes/addCliente" class="list-group-item">Agregar</a>
+              <a href="<?=base_url()?>clientes/mostrar" class="list-group-item">Consulta</a>
+            </div>
+            <div class="paneles list-group">
+              <a href="#" class="list-group-item active">
+                Servicios
+              </a>
+              <a href="<?=base_url()?>serviciofolio/mostrarServicios" class="list-group-item">Consulta</a>
+              <a href="<?=base_url()?>serviciofolio/fechasCorte" class="list-group-item">Corte</a>
+            </div>
+            <div class="paneles list-group">
+              <a href="#" class="list-group-item active">
+                Refacciones
+              </a>
+              <a href="<?=base_url()?>refacciones/addRef" class="list-group-item">Agregar</a>
+              <a href="<?=base_url()?>refacciones/consultaGeneral" class="list-group-item">Consulta</a>
+            </div>
+          </div><!--menu Lateral-->
+          <div class="col-md-10 col-xs-12 col-lg-10 " id="contenedor-derecho">
+         
+        <!--section id="logo">
             </section>
             <div id="item-empleado">
               <div class="item-logo">
@@ -102,11 +146,7 @@
                   <li><a href="<?=base_url()?>refacciones/consultaGeneral">Consulta</a></li>
               </ul>
            
-            </div>
-          </div><!--menu Lateral-->
-          <div class="col-md-10 col-xs-12 col-lg-10 " id="contenedor-derecho">
-         
-        
+            </div-->
         
         
     

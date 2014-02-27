@@ -1,6 +1,7 @@
 
 $(document).on('ready',function()
 {
+	var btnEliSuc=$('.btnEliSuc');
 	var id; // el id, de la sucursal
 	var divsuc=$('div#modi_suc');
 	var frmsuc=$('#frm_modi_suc');
@@ -16,9 +17,17 @@ $(document).on('ready',function()
 	var telefono=$('#telefono');
 	var colNom;
 	var colDom;
+	var ren=null;
+	var suc=null;
 	var idsuc2=$('#frmidsuc')
 		tabla.dataTable({
 		"bJQueryUI":true
+	});
+	var btnDesactivar=$("button#btnDesactivar");
+	var modalSuc=$("div#modalSuc");
+	modalSuc.modal({
+		backdrop:false,
+		show:false
 	});
 	cargador.dialog({
 			autoOpen:false,
@@ -39,7 +48,7 @@ $(document).on('ready',function()
 		{
 			autoOpen:false,
 			modal:true,
-			height:470,
+			height:530,
 			width:600,
 			show: {
         effect: "fold",
@@ -69,12 +78,23 @@ $(document).on('ready',function()
 
 		divsuc.dialog("open");	
 	});
+	btnEliSuc.on('click',function()
+	{
+		suc=$(this).parent().parent().find(':input').val();
+		ren=$(this).parent().parent();
+		document.querySelector('#mnsSuc').innerHTML="Si eliminas una sucursal, solo se desactivara.";
+		modalSuc.modal('show');
+	})
+	btnDesactivar.on('click',function()
+	{
+		eliminarSuc(suc,ren,modalSuc);
+	})
 	function updateSuc(id,colNom,colDom)
 	{
 		document.frm_modi_suc.idsuc.value=id;
-
+		rutaSuc=document.rutasSuc.rutaModiSuc.value;
 		$.ajax({
-			url:'http://localhost/servicio/sucursal/modiSuc',
+			url:rutaSuc,
 			beforeSend:function()
 			{
 				
@@ -85,10 +105,24 @@ $(document).on('ready',function()
 			type:"POST",
 			success:function(resp)
 			{
-				if(resp==1)
+				switch(resp)
 				{
-					colDom.text(domicilio.val());
-					colNom.text(nombre.val());
+					case "1":
+						colDom.text(domicilio.val());
+						colNom.text(nombre.val());
+						divsuc.dialog("close");
+						break;
+					case "2":
+						alert('Ya existe una sucursal, con el mismo domicilio');
+						break;
+					case "3":
+						alert('Ya existe ese nombre');
+						break;
+					case "error":
+						alert("Complete todos los campos");
+						break;
+					default:
+						alert('ocurrio un error');
 				}
 			},
 			error:function(xhr,estado,error)
@@ -98,7 +132,7 @@ $(document).on('ready',function()
 			complete:function(xhr)
 			{
 				cargador.dialog("close");
-				divsuc.dialog("close");
+				//divsuc.dialog("close");
 			}
 		});
 	}
@@ -159,3 +193,37 @@ $(document).on('ready',function()
 		identificador(nombre.val(),edonombre);
 	});
 });
+function eliminarSuc(suc,ren,modalSuc)
+{
+	ruta=document.rutasSuc.rutaEliSuc.value;
+	$.ajax({
+		url:ruta,
+		beforeSend:function()
+		{
+			document.querySelector('#mnsSuc').innerHTML="<font color='green'>Espere.....</font>";
+		},
+		type:'post',
+		data:{idsuc:suc},
+		dataType:'text',
+		success:function(resp)
+		{
+			if(resp=="1")
+			{
+				ren.remove();
+				modalSuc.modal('hide');
+			}
+			else
+			{
+				document.querySelector('#mnsSuc').innerHTML="No se pudo desactivar";
+			}
+		},
+		error:function(xhr,error,estado)
+		{
+			alert(error+" "+estado);
+		},
+		complete:function(xhr)
+		{
+
+		}
+	});
+}

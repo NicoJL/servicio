@@ -82,7 +82,7 @@
   <a href="#" class="list-group-item active">
   Refacciones
   </a>
-		<a href="#" class="list-group-item"><form action="<?=base_url()?>refacciones/vender" method="post">
+		<a href="#" class="list-group-item"><form action="<?=base_url()?>refacciones/cargarServicio" method="post">
 			<!--input type="hidden" name="servicio" value="<?=$cont?>"-->
 			<?php foreach($query->result() as $row){?>
 			<input type="hidden" name="idServ" id="idServ" value="<?=$row->idServ?>">

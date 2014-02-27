@@ -129,6 +129,10 @@ var opts = {
 			{
 				switch(resp)
 				{
+					
+					case "0":
+						alert('Complete los datos');
+						break;
 					case "1":
 						modalServicio.modal("hide");
 						tabla=$('table#tabla_detservicio');
@@ -221,6 +225,10 @@ var opts = {
 		{
 			switch(resp)
 			{
+				
+				case "0":
+					alert('Complete los datos');
+					break;
 				case "1":
 				case "2":
 					tabla.find("tr:eq(1)").find('td:eq(0)').text(document.frmTeam.nomEquipo.value);

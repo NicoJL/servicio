@@ -7,6 +7,8 @@ class Serviciofolio extends CI_Controller {
 		parent::__construct();
 		$this->load->helper('form');
 		$this->load->library("form_validation");
+		$this->form_validation->set_message('required', '%s es un campo requerido');
+		$this->form_validation->set_error_delimiters("<div class='alert alert-danger'>","</div>");
 		$this->load->model("ModelServicio");
 		$this->load->library('pagination');
 	}
@@ -14,6 +16,73 @@ class Serviciofolio extends CI_Controller {
 	{
 			
 	}
+	function folioPDF()
+	{
+		$fol=$this->uri->segment(3);
+		$query=$this->ModelServicio->ticket($fol);
+		foreach ($query->result() as $row) {
+			$folio=$row->folio;
+			$fecha=$row->fecha;
+			$edo=$row->estadogeneral;
+			$nombre=$row->nombre;
+			$nomEquipo=$row->nomEquipo;
+			$numSerie=$row->numSerie;
+			$tipo=$row->tipo;
+			$falla=$row->falla;
+		}
+		require('fpdf/fpdf.php');
+		$pdf=new FPDF('P','mm',array(75,120));
+		$pdf->AddPage();
+		$pdf->Image('img/logoisco.PNG',50,5,20,10);
+		$pdf->SetFont('Arial','BU',11);
+		$pdf->Ln(10);
+		$pdf->Cell(0,1,'Datos del Folio',0,0,'L');
+		$pdf->Ln(5);
+		$pdf->SetFont('Arial','',9);
+		//---------------Datos folio----------------------
+		$pdf->Cell(12,5,'N.Folio:',0,0,'L');
+		$pdf->SetFont('Arial','B',9);
+		$pdf->Cell(43,5,$folio,0,1,'L');
+		//----
+		$pdf->SetFont('Arial','',9);
+		$pdf->Cell(12,5,'Fecha:',0,0,'L');
+		$pdf->SetFont('Arial','B',9);
+		$pdf->Cell(43,5,$fecha,0,0,'L');
+		
+		//--------Datos del equipo-----
+		$pdf->Ln(10);
+		$pdf->SetFont('Arial','BU',11);
+		$pdf->Cell(0,1,'Equipo',0,0,'L');
+		$pdf->Ln(5);
+		$pdf->SetFont('Arial','',9);
+		$pdf->cell(13,5,'Nombre:',0,0);
+		$pdf->SetFont('Arial','B',9);
+		$pdf->cell(42,5,$nomEquipo,0,1);
+		//
+		$pdf->SetFont('Arial','',9);
+		$pdf->cell(13,5,'N.Serie:',0,0);
+		$pdf->SetFont('Arial','B',9);
+		$pdf->cell(42,5,$numSerie,0,0);
+		//---Datos del servicio-------
+		$pdf->Ln(10);
+		$pdf->SetFont('Arial','BU',11);
+		$pdf->Cell(0,1,'Servicio',0,0,'L');
+		$pdf->Ln(5);
+		$pdf->SetFont('Arial','',9);
+		$pdf->cell(9,5,'Tipo:',0,0);
+		$pdf->SetFont('Arial','B',9);
+		$pdf->cell(46,5,$tipo,0,0);
+		//----------datos Cliente
+		$pdf->Ln(10);
+		$pdf->SetFont('Arial','BU',11);
+		$pdf->Cell(0,1,'Cliente',0,0,'L');
+		$pdf->Ln(5);
+		$pdf->SetFont('Arial','B',9);
+		$pdf->Cell(0,5,$nombre,0,0);
+		$pdf->output();
+		return $pdf;
+	}
+
 	public function addFolio()
 	{
 		$vec=array();
@@ -221,7 +290,7 @@ class Serviciofolio extends CI_Controller {
 			echo $query;
 		}
 		else
-			echo "Faltan Datos por Llenar";
+			echo "0";
 	}
 	function fechasCorte()
 	{
@@ -232,12 +301,13 @@ class Serviciofolio extends CI_Controller {
 		if($this->session->userdata('fin'))
 			$this->session->unset_userdata('fin');
 		$this->form_validation->set_rules('idsuc','Sucursal','required');
-		$this->form_validation->set_rules('inicio','Las dos fechas','required');
-		$this->form_validation->set_rules('fin','Las dos fechas','required');
+		$this->form_validation->set_rules('inicio','La fecha De:','required');
+		$this->form_validation->set_rules('fin','La fecha hasta:','required');
 		if($this->form_validation->run()===FALSE)
 		{
 			$data['query']=$this->ModelServicio->getSucursales();
 			$data['title']="Corte";
+			$data['ruta']="fechas.js";
 			$this->load->view('templates/header',$data);
 			$this->load->view('servicios/fechas');	
 		}

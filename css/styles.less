@@ -12,7 +12,15 @@ a
 body
 {
 //	background-image:url(../img/fondo.jpg) ;
-	//background-color:#e6f2ef;
+	background: #f9fcf7; /* Old browsers */
+background: -moz-linear-gradient(-45deg,  #f9fcf7 0%, #f5f9f0 100%); /* FF3.6+ */
+background: -webkit-gradient(linear, left top, right bottom, color-stop(0%,#f9fcf7), color-stop(100%,#f5f9f0)); /* Chrome,Safari4+ */
+background: -webkit-linear-gradient(-45deg,  #f9fcf7 0%,#f5f9f0 100%); /* Chrome10+,Safari5.1+ */
+background: -o-linear-gradient(-45deg,  #f9fcf7 0%,#f5f9f0 100%); /* Opera 11.10+ */
+background: -ms-linear-gradient(-45deg,  #f9fcf7 0%,#f5f9f0 100%); /* IE10+ */
+background: linear-gradient(135deg,  #f9fcf7 0%,#f5f9f0 100%); /* W3C */
+filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f9fcf7', endColorstr='#f5f9f0',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
+
 	font-family: 'olort';
 }
 ul,ol 
@@ -23,7 +31,7 @@ ul,ol
 }
 #contenedor-derecho
 {
-	margin-left: 200px;
+	//margin-left: 200px;
 	
 
 
@@ -31,24 +39,18 @@ ul,ol
 	.redondeado(20px);
 }
 #barraPrincipal
-{
-	background: #a7cfdf; /* Old browsers */
-background: -moz-linear-gradient(top,  #a7cfdf 0%, #23538a 100%); /* FF3.6+ */
-background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#a7cfdf), color-stop(100%,#23538a)); /* Chrome,Safari4+ */
-background: -webkit-linear-gradient(top,  #a7cfdf 0%,#23538a 100%); /* Chrome10+,Safari5.1+ */
-background: -o-linear-gradient(top,  #a7cfdf 0%,#23538a 100%); /* Opera 11.10+ */
-background: -ms-linear-gradient(top,  #a7cfdf 0%,#23538a 100%); /* IE10+ */
-background: linear-gradient(to bottom,  #a7cfdf 0%,#23538a 100%); /* W3C */
-filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#a7cfdf', endColorstr='#23538a',GradientType=0 ); /* IE6-9 */
+{background: #f7fbfc; /* Old browsers */
+background: -moz-linear-gradient(top,  #f7fbfc 0%, #d9edf2 40%, #add9e4 100%); /* FF3.6+ */
+background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#f7fbfc), color-stop(40%,#d9edf2), color-stop(100%,#add9e4)); /* Chrome,Safari4+ */
+background: -webkit-linear-gradient(top,  #f7fbfc 0%,#d9edf2 40%,#add9e4 100%); /* Chrome10+,Safari5.1+ */
+background: -o-linear-gradient(top,  #f7fbfc 0%,#d9edf2 40%,#add9e4 100%); /* Opera 11.10+ */
+background: -ms-linear-gradient(top,  #f7fbfc 0%,#d9edf2 40%,#add9e4 100%); /* IE10+ */
+background: linear-gradient(to bottom,  #f7fbfc 0%,#d9edf2 40%,#add9e4 100%); /* W3C */
+filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f7fbfc', endColorstr='#add9e4',GradientType=0 ); /* IE6-9 */
 
 
 
-}
-#contenedor{
-	width:400px;
-	height:50%;
-	border:1px solid #428bca;
-	.redondeado(5px);
+
 }
 #contenedor-principal
 {
@@ -65,14 +67,14 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#a7cfdf', end
 	font-family: "olort";
 	src:url(../michroma.ttf);
 }
-#logo
+/*#logo
 {
 	background-image: url(../img/logoIsco.png);
 	height: 30px;
 	margin:10px;
 	.redondeado(5px);
 	width: 50px;
-	z-index: 10 !important;
+		z-index: 10 !important;
 	position: relative;
 	opacity: 1;
 }
@@ -93,7 +95,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#a7cfdf', end
 {
 	.items;
 }
-#menu
+/*#menu
 {
 //background: rgb(69,72,77); /* Old browsers */
 /*background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(69,72,77,1)), color-stop(100%,rgba(0,0,0,1))); /* Chrome,Safari4+ */
@@ -102,7 +104,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#a7cfdf', end
 //background: -ms-linear-gradient(top,  rgba(69,72,77,1) 0%,rgba(0,0,0,1) 100%); /* IE10+ */
 //background: linear-gradient(to bottom,  rgba(69,72,77,1) 0%,rgba(0,0,0,1) 100%); /* W3C */
 //filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#45484d', endColorstr='#000000',GradientType=0 ); /* IE6-9 */
-background-color: rgba(153,204,255,0.0);
+/*background-color: rgba(153,204,255,0.0);
 	height: 100%;
 	padding: 0px;
 	position: fixed;
@@ -114,8 +116,8 @@ background-color: rgba(153,204,255,0.0);
 
 	.transicion(width);
 
-}
-#menu:hover
+}*/
+/*#menu:hover
 {
 	width: 180px;
 }
@@ -137,7 +139,7 @@ background-color: rgba(153,204,255,0.0);
 {
 	 background-color:#535aed;
 	.redondeado(5px);
-}
+}*/
 #navegador
 {
 	margin-left: 0px;
@@ -158,12 +160,26 @@ background-color: rgba(153,204,255,0.0);
 }
 .error
 {
+	.mns;
+	background: #FFDAB9;
+	color:#FA8072;
 	
-	padding: 0px;
+}
+.mns
+{
+	padding-left: 5px;
+	padding-right: 5px;
 	float: right;
 	margin: 0px;
 	height: 40px;
 	line-height: 40px;
+	.redondeado(5px);
+}
+.exito
+{
+	.mns;
+	background-color:#F0FFFF;
+	color:#87CEFA;
 }
 .item-logo
 {
@@ -175,6 +191,7 @@ background-color: rgba(153,204,255,0.0);
 
 	
 }
+
 .texto
 {
 	color:blue;
